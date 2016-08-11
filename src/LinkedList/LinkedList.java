@@ -2,12 +2,20 @@ package LinkedList;
 
 /**
  * Created by connie on 8/9/16.
+ *
+ * This is a singly linked list
  */
 public class LinkedList {
 
-    static Node head;
+    private static Node head;
+    private int size;
 
-    static class Node {
+    private LinkedList(int n) {
+        head = new Node(n);
+        size = 1;
+    }
+
+    private static class Node {
         int data;
         Node next;
 
@@ -18,29 +26,47 @@ public class LinkedList {
 
     }
 
-    Node showHead() {
-        return this.head;
+    private Node getHead() {
+        return head;
     }
 
-    void add(Node n) {
-        if(this.head != null) {
-            Node start = this.head;
-            while(start.next != null) {
-                if(start.next == null) {
-                    start.next = n;
-                } else {
-                    start = start.next;
-                }
+    private void add(int n) {
+        if(head == null) {
+            head = new Node(n);
+        }
+        else {
+            Node newNode = new Node(n);
+            Node current = getHead();
+
+            while (current.next != null) {
+                current = current.next;
             }
+
+            current.next = newNode;
+            this.size++;
+        }
+    }
+
+    private void printList() {
+        Node current = head;
+        if(this.size < 1) {
+            System.out.println("Empty List!");
         } else {
-            this.head = n;
+            while(current != null) {
+                System.out.println("Node number " + current.data);
+                current = current.next;
+            }
         }
     }
 
     public static void main(String[] args) {
-        LinkedList list = new LinkedList();
-        list.add(new Node(1));
-        Node head = list.showHead();
+        LinkedList list = new LinkedList(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        Node head = list.getHead();
         System.out.println("The head is " + head.data);
+        System.out.println("The next node is " + head.next.data);
+        list.printList();
     }
 }
